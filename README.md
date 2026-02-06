@@ -44,6 +44,7 @@ You can install it globally to use it repeatedly, or run it once using `npx`.
 **Option A: Global Install (Recommended)**
 ```bash
 npm install -g streamshare-cli
+```
 **Option B: Run Once (No Install)**
 
 ```bash
@@ -78,7 +79,7 @@ Bash
 streamshare start photo
 ```
 
-4. **Receive Mode (Upload Only)**nWant to send photos from your phone to your computer? Run the command without any files.
+4. **Receive Mode (Upload Only)** Want to send photos from your phone to your computer? Run the command without any files.
 
 Bash
 ```

@@ -1,17 +1,19 @@
 {
-  "name": "streamshare-cli", 
-  "version": "3.3.1", 
+  "name": "streamshare-cli",
+  "version": "3.3.3",
   "description": "A raw Node.js tool for Bi-directional file sharer over local network",
   "bin": {
     "streamshare": "./index.js"
   },
-  "keywords": ["airdrop",
-  "file-transfer",
-  "upload",
-  "local-network",
-  "cli",
-  "http-server",
-  "video-stream"],
+  "keywords": [
+    "airdrop",
+    "file-transfer",
+    "upload",
+    "local-network",
+    "cli",
+    "http-server",
+    "video-stream"
+  ],
   "author": "blue9kamrul",
   "license": "MIT"
 }
