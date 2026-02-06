@@ -1,66 +1,104 @@
-﻿# StreamShare
+﻿# StreamShare Ultimate 🚀
 
-A tiny pure-Node.js CLI to serve local files over HTTP  zero dependencies.
+**The Zero-Dependency, Cross-Platform AirDrop Clone for Developers.**
 
-## What It Does
+Instantly stream files, watch videos, and transfer data between your computer and mobile devices over Wi-Fi. Built entirely with **Raw Node.js** (No Express, No Socket.io) to demonstrate high-performance system engineering.
 
-- Serves files over HTTP from your machine so other devices can download them.
-- Lightweight, zero external libraries; implemented in `index.js`.
-- Auto-opens the browser and prints Local and Network URLs.
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node](https://img.shields.io/badge/node->=14.0.0-green.svg)
+![Version](https://img.shields.io/badge/version-3.3.1-orange.svg)
+![Size](https://img.shields.io/badge/size-18kb-brightgreen.svg)
 
-## New Features
+## ❓ Why Should You Use This?
 
-- **Multiple Files**: Pass many file paths to share multiple files at once. Example:
+Most file-sharing CLI tools (like `http-server` or `serve`) are "Read-Only." They let you download a file to your phone, but they don't help you get that photo **from** your phone **to** your computer.
 
-  `streamshare start file1.mp4 file2.pdf "My Doc.docx"`
+**StreamShare is different because:**
+1.  **It's Bi-Directional:** You can Drag & Drop files from your phone to upload them back to your computer.
+2.  **It's a Media Server:** You don't need to download a 2GB movie to watch it. StreamShare streams it instantly to your browser.
+3.  **It's Smart:** You don't need to type file extensions. Type `streamshare start movie` and it finds `movie.mp4`.
 
-  The landing page lists each file with an individual download link.
+## 🆚 How is it different from others?
 
-- **QR Code**: The server generates a QR code pointing to the network URL so other devices can scan and open the page without typing the address.
+| Feature | 🚀 StreamShare | 📦 http-server | 🍏 AirDrop |
+| :--- | :---: | :---: | :---: |
+| **Dependencies** | **0 (Zero)** | 25+ | N/A |
+| **Video Streaming** | **Yes (Seek Support)** | No | Yes |
+| **Upload to Host** | **Yes (Drag & Drop)** | No | Yes |
+| **Cross-Platform** | **Yes (Win/Mac/Linux)** | Yes | No (Apple Only) |
+| **Setup Time** | **Instant** | Instant | Instant |
 
-- **Port Rotation**: If the default port (3000) is occupied, the app will try successive ports (3001, 3002, ...) until it finds a free one.
+## ✨ Key Features
 
-- **Per-file streaming**: Each listed file is streamed individually with correct MIME type and Content-Disposition.
+* **☁️ Universal AirDrop:** A beautiful, responsive Web UI that works on iOS, Android, and Desktop.
+* **🎬 In-Browser Streaming:** Watch videos (`.mp4`, `.mkv`) immediately with a Netflix-style player. Supports seeking (rewind/fast-forward) using HTTP Range Requests.
+* **🧠 Smart Path Resolution:** Hate typing extensions? Just type the filename (e.g., `resume`), and the tool auto-detects `resume.pdf`.
+* **📱 Instant Connect:** Generates a **QR Code** on your screen. Just scan to connect—no typing IP addresses.
+* **🤖 Auto-Port Detection:** Never crashes because "Port 3000 is in use." It automatically finds the next free port.
+* **⚡ Zero Dependencies:** Built using **only** standard Node.js libraries (`http`, `fs`, `net`, `child_process`).
 
-- **Progress & Logging**: Server console shows per-download progress and logs remote addresses and timestamps.
+## 📦 Installation
 
-## Existing / Retained Behavior
+You can install it globally to use it repeatedly, or run it once using `npx`.
 
-- Landing page with download button and file metadata (size, name).
-- Auto-open browser on start (can be disabled with `--no-open`).
-- Streams files using `fs.createReadStream` (memory-efficient).
-- Prints Local (`http://localhost:<port>`) and Network (`http://<local-ip>:<port>`) URLs.
+**Option A: Global Install (Recommended)**
+```bash
+npm install -g streamshare-cli
+**Option B: Run Once (No Install)**
 
-## Usage
-
-Start sharing one or more files:
-
-```
-streamshare start <file> [more-files...]
-```
-
-Options (examples  implement flags in CLI if available):
-
-- `--port <n>`: prefer a specific starting port (defaults to 3000)
-- `--no-open`: don't open the browser automatically
-- `--quiet`: reduce console output
-
-## Notes & Recommendations
-
-- QR code requires a device with a camera/display to scan; scanning opens the network URL on the scanning device.
-- When sharing over a LAN, verify your firewall/router allows inbound connections on the chosen port.
-- For large files and better UX, resumable downloads (HTTP Range) are recommended; consider enabling Range support per-file.
-- Filenames should be escaped/encoded in the UI to avoid XSS issues.
-
-## Files
-
-- Primary entry: `index.js`  updated to support multiple files, QR generation, and port rotation.
-
-## Example
-
-Share two files and disable auto-open:
-
-```
-streamshare start file1.mp4 file2.zip --no-open
+```bash
+npx streamshare-cli start myvideo.mp4
 ```
 
+ How to Use
+Once installed, simply type `streamshare start` followed by what you want to do.
+
+1. **Share a Single File**
+Great for quickly sending a document or video to your phone.
+
+Bash
+```
+streamshare start movie.mp4
+```
+
+2. **Share Multiple Files**
+You can list as many files as you want.
+
+Bash
+```
+streamshare start resume.pdf vacation.jpg song.mp3
+```
+
+3. **Smart Selection (No Extensions)**
+Don't remember if it's .jpg or .png? Just type the name!
+
+Bash
+```
+# Automatically finds 'photo.png' or 'photo.jpg'
+streamshare start photo
+```
+
+4. **Receive Mode (Upload Only)**nWant to send photos from your phone to your computer? Run the command without any files.
+
+Bash
+```
+streamshare start
+```
+Scan the QR code with your phone.
+
+Tap the "Drop Zone" on your phone screen.
+
+Select your photos/videos.
+
+Result: They instantly appear in your terminal's current folder!
+---
+
+##  Screenshots
+
+- StreamShare running in the terminal:
+
+![StreamShare terminal screenshot](screenshot1.png)
+
+- Mobile UI (scan QR & upload):
+
+![StreamShare mobile UI](screenshot.png)
