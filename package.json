@@ -1,9 +1,11 @@
 {
-  "name": "streamshare-cli",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "streamshare-cli", 
+  "version": "1.0.0", 
+  "description": "A raw Node.js tool to share files over local network",
   "bin": {
     "streamshare": "./index.js"
   },
-  "dependencies": {}
+  "keywords": ["cli", "file-sharing", "stream", "http", "local"],
+  "author": "blue9kamrul",
+  "license": "MIT"
 }

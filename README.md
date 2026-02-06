@@ -1,55 +1,66 @@
-# StreamShare CLI 📡
+﻿# StreamShare
 
-A zero-dependency, lightweight Node.js CLI tool for instantly streaming files over a local network. Built entirely with **Raw Node.js** APIs to demonstrate efficient memory management and low-level HTTP handling.
+A tiny pure-Node.js CLI to serve local files over HTTP  zero dependencies.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node](https://img.shields.io/badge/node->=14.0.0-green.svg)
-![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
+## What It Does
 
-## 🚀 Why This Project?
+- Serves files over HTTP from your machine so other devices can download them.
+- Lightweight, zero external libraries; implemented in `index.js`.
+- Auto-opens the browser and prints Local and Network URLs.
 
-Most file-sharing tools rely on heavy frameworks like Express.js or socket.io. **StreamShare** was built to demonstrate how to handle high-performance I/O operations using only the Node.js standard library.
+## New Features
 
-It solves the **"Heap Out of Memory"** problem common in beginner Node.js apps by using **Streams** and **Pipes** to serve files of any size (even 10GB+) with constant, low memory usage (RAM).
+- **Multiple Files**: Pass many file paths to share multiple files at once. Example:
 
-## ✨ Key Features
+  `streamshare start file1.mp4 file2.pdf "My Doc.docx"`
 
-* **Zero Dependencies:** No `express`, `commander`, or `yargs`. Just pure Node.js.
-* **Memory Efficient:** Uses `fs.createReadStream()` to pipe data directly to the HTTP response.
-* **Network Discovery:** Automatically detects the machine's local IP using the `os` module.
-* **Smart Headers:** Dynamic MIME-type detection and Content-Disposition for proper file handling.
-* **Real-time Feedback:** Custom-built CLI progress bar tracking the data stream.
+  The landing page lists each file with an individual download link.
 
-## 🛠️ Technical Architecture
+- **QR Code**: The server generates a QR code pointing to the network URL so other devices can scan and open the page without typing the address.
 
-This tool leverages the following core Node.js concepts:
+- **Port Rotation**: If the default port (3000) is occupied, the app will try successive ports (3001, 3002, ...) until it finds a free one.
 
-1.  **`http` Module:** Creates a raw server to handle requests and manage headers manually.
-2.  **`fs` Streams:** Reads files in chunks (buffers) rather than loading the entire file into memory.
-3.  **`process.stdout`:** Manipulates the cursor to create a rewriteable progress bar in the terminal.
-4.  **`child_process`:** Automates OS-level commands to open the default browser.
-5.  **`os` Interfaces:** Filters network interfaces to find the correct IPv4 address.
+- **Per-file streaming**: Each listed file is streamed individually with correct MIME type and Content-Disposition.
 
-## 📦 Installation
+- **Progress & Logging**: Server console shows per-download progress and logs remote addresses and timestamps.
 
-Since this is a CLI tool, you can link it globally on your machine.
+## Existing / Retained Behavior
 
-1.  **Clone the repository**
-    ```bash
-    git clone [https://github.com/your-username/streamshare-cli.git](https://github.com/your-username/streamshare-cli.git)
-    cd streamshare-cli
-    ```
+- Landing page with download button and file metadata (size, name).
+- Auto-open browser on start (can be disabled with `--no-open`).
+- Streams files using `fs.createReadStream` (memory-efficient).
+- Prints Local (`http://localhost:<port>`) and Network (`http://<local-ip>:<port>`) URLs.
 
-2.  **Link globally** (simulates an npm install)
-    ```bash
-    npm link
-    ```
-    *(Note: You may need `sudo npm link` on macOS/Linux)*
+## Usage
 
-## 💻 Usage
+Start sharing one or more files:
 
-Once installed, you can use the `streamshare` command from anywhere in your terminal.
+```
+streamshare start <file> [more-files...]
+```
 
-**Syntax:**
-```bash
-streamshare start <filename>
+Options (examples  implement flags in CLI if available):
+
+- `--port <n>`: prefer a specific starting port (defaults to 3000)
+- `--no-open`: don't open the browser automatically
+- `--quiet`: reduce console output
+
+## Notes & Recommendations
+
+- QR code requires a device with a camera/display to scan; scanning opens the network URL on the scanning device.
+- When sharing over a LAN, verify your firewall/router allows inbound connections on the chosen port.
+- For large files and better UX, resumable downloads (HTTP Range) are recommended; consider enabling Range support per-file.
+- Filenames should be escaped/encoded in the UI to avoid XSS issues.
+
+## Files
+
+- Primary entry: `index.js`  updated to support multiple files, QR generation, and port rotation.
+
+## Example
+
+Share two files and disable auto-open:
+
+```
+streamshare start file1.mp4 file2.zip --no-open
+```
+
